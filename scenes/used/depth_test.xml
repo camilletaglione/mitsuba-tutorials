@@ -1,0 +1,18 @@
+<sensor type="perspective">
+        <film type="depthfilm">
+            <width value="800"/>
+            <height value="600"/>
+            <near_clip value="0.1"/>
+            <far_clip value="10.0"/>
+            <filename value="output_depth.exr"/>
+        </film>
+        <sampler type="ldsampler"/>
+        <medium type="homogeneous">
+            <sigma_a value="0.0"/>
+            <sigma_s value="0.0"/>
+            <phase type="hg"/>
+        </medium>
+        <to_world>
+            <lookat target="0,0,0" origin="0,0,5" up="0,1,0"/>
+        </to_world>
+    </sensor>

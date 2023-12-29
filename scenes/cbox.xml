@@ -108,4 +108,11 @@
         </transform>
         <ref id="glass"/>
     </shape>
+
+    <shape type="sphere" id="glasssphere">
+        <transform name="to_world">
+            <scale value="0.25"/>
+        </transform>
+        <ref id="glass"/>
+    </shape>
 </scene>

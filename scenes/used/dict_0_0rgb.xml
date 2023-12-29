@@ -1,0 +1,156 @@
+<scene version="3.0.0">
+    <default name="spp" value="512" />
+
+
+    <sensor type="perspective" id="sensor">
+       <string name="fov_axis" value="x" />
+        <float name="near_clip" value="0.1" />
+        <float name="far_clip" value="2.0" />
+        <float name="focus_distance" value="446.31" />
+        <float name="fov" value="61.3" />
+        <transform name="to_world">
+            <lookat origin="0.1500, -0.1500, 0.5196" target="0.1500, 0.1500, -0.0000" up="0.0000, 0.0000, 1.0000" />
+        </transform>
+        <sampler type="independent">
+            <integer name="sample_count" value="$spp" />
+        </sampler>
+        <film type="hdrfilm">
+            <integer name="width" value="640" />
+            <integer name="height" value="480" />
+            <rfilter type="gaussian" />
+        </film>
+    </sensor>
+
+    <bsdf type="dielectric" id="glass">
+        <float name="int_ior" value="1.504" />
+        <float name="ext_ior" value="1.0" />
+    </bsdf>
+
+    <bsdf type="diffuse" id="black">
+        <rgb name="reflectance" value="0.05" />
+    </bsdf>
+
+
+    
+
+    <shape type="obj" id="light">
+        <string name="filename" value="/home/ctaglione/mitsuba3/mitsuba3/tutorials/scenes/meshes/cbox_luminaire.obj" />
+        <transform name="to_world">
+            <translate x="0" y="0" z="1" />
+        </transform>
+        <bsdf type="diffuse" id="white">
+            <rgb name="reflectance" value="0.8" />
+        </bsdf>
+        <emitter type="area">
+            <rgb name="radiance" value="25.0" />
+        </emitter>
+    </shape>
+
+    
+
+    <shape type="obj" id="2"> 
+        <string name="filename" value="/home/ctaglione/code/GraspNeRF/data/assets/data/urdfs/pile_subdiv/test/donut_poisson_000_visual.obj" />
+            <transform name="to_world">
+                <matrix value="-0.1946771168887343 -0.8117228834831973 0.5506421529356559 0.13251858165725 0.9796844975165331 -0.18847386595247367 0.06852654360689436 0.20363682960679824 0.04815709174845095 0.5527961308499302 0.8319238740604086 0.06253540626291255 0.0 0.0 0.0 1.0" /> 
+            </transform>
+        <ref id="glass" />
+        <medium type="homogeneous" name="interior">
+            <float name="scale" value="4" />
+            <rgb name="sigma_t" value="1, 1, 0.5" />
+            <rgb name="albedo" value="0.0, 0.0, 0.0" />
+        </medium>
+    </shape> 
+
+    <shape type="obj" id="3"> 
+        <string name="filename" value="/home/ctaglione/code/GraspNeRF/data/assets/data/urdfs/pile_subdiv/test/pudding_box_visual.obj" />
+            <transform name="to_world">
+                <matrix value="0.0001303287176352974 -0.004499233645791578 0.9999898699042035 0.1698023016632544 0.8443024193401023 0.535862044095827 0.002300954995584137 0.12492926665822093 -0.5358669682961202 0.8442935665951994 0.0038685520653546357 0.06475476935845059 0.0 0.0 0.0 1.0" /> 
+            </transform>
+        <ref id="glass" />
+        <medium type="homogeneous" name="interior">
+            <float name="scale" value="4" />
+            <rgb name="sigma_t" value="1, 1, 0.5" />
+            <rgb name="albedo" value="0.0, 0.0, 0.0" />
+        </medium>
+    </shape> 
+
+    <shape type="obj" id="4"> 
+        <string name="filename" value="/home/ctaglione/code/GraspNeRF/data/assets/data/urdfs/pile_subdiv/test/cracker_box_visual.obj" />
+            <transform name="to_world">
+                <matrix value="0.15881002806013864 0.9873007824526597 -0.004066934460245475 0.05531520275397664 -0.023787034044806643 -0.00029187052482787523 -0.9997170058686349 0.15173039436228541 -0.9870225691436287 0.15886182606265953 0.023438605358427844 0.06357046537558105 0.0 0.0 0.0 1.0" /> 
+            </transform>
+        <ref id="glass" />
+        <medium type="homogeneous" name="interior">
+            <float name="scale" value="4" />
+            <rgb name="sigma_t" value="1, 1, 0.5" />
+            <rgb name="albedo" value="0.0, 0.0, 0.0" />
+        </medium>
+    </shape> 
+
+    <shape type="obj" id="5"> 
+        <string name="filename" value="/home/ctaglione/code/GraspNeRF/data/assets/data/urdfs/pile_subdiv/test/bowling_pin_poisson_000_visual.obj" />
+            <transform name="to_world">
+                <matrix value="0.8293573265190143 0.18290544913885826 0.5279318342594487 0.11129361039905787 0.0505262813695779 -0.9655787024877477 0.2551565484032108 0.07552848671513954 0.5564292586126253 -0.184941520425756 -0.8100513034261559 0.09409653709510611 0.0 0.0 0.0 1.0" /> 
+            </transform>
+        <ref id="glass" />
+        <medium type="homogeneous" name="interior">
+            <float name="scale" value="4" />
+            <rgb name="sigma_t" value="1, 1, 0.5" />
+            <rgb name="albedo" value="0.0, 0.0, 0.0" />
+        </medium>
+    </shape> 
+
+    <shape type="obj" id="6"> 
+        <string name="filename" value="/home/ctaglione/code/GraspNeRF/data/assets/data/urdfs/pile_subdiv/test/KoalaCandy_800_tex_visual.obj" />
+            <transform name="to_world">
+                <matrix value="-0.18115080573700956 -0.054194479767971926 0.9819609686456541 0.042906739763817835 -0.9497116283632783 -0.24966802760271942 -0.18898068405140933 0.25475269306367515 0.25540596808297783 -0.9668137537062901 -0.006241563261738664 0.06649338022329128 0.0 0.0 0.0 1.0" /> 
+            </transform>
+        <ref id="glass" />
+        <medium type="homogeneous" name="interior">
+            <float name="scale" value="4" />
+            <rgb name="sigma_t" value="1, 1, 0.5" />
+            <rgb name="albedo" value="0.0, 0.0, 0.0" />
+        </medium>
+    </shape> 
+
+    <shape type="obj" id="floor">
+        <string name="filename" value="/home/ctaglione/mitsuba3/mitsuba3/tutorials/scenes/meshes/cbox_floor.obj" />
+        <ref id="black" />
+        <transform name="to_world">
+            <translate x="0" y="0" z="1.0" />
+        </transform>
+    </shape>
+
+    <shape type="obj" id="ceiling">
+        <string name="filename" value="/home/ctaglione/mitsuba3/mitsuba3/tutorials/scenes/meshes/cbox_ceiling.obj" />
+        <ref id="black" />
+        <transform name="to_world">
+            <translate x="0" y="0" z="1.0" />
+        </transform>
+    </shape>
+
+    <shape type="obj" id="back">
+        <string name="filename" value="/home/ctaglione/mitsuba3/mitsuba3/tutorials/scenes/meshes/cbox_back.obj" />
+        <ref id="black" />
+        <transform name="to_world">
+            <translate x="0" y="0" z="1.0" />
+        </transform>
+    </shape>
+
+    <shape type="obj" id="greenwall">
+        <string name="filename" value="/home/ctaglione/mitsuba3/mitsuba3/tutorials/scenes/meshes/cbox_greenwall.obj" />
+        <ref id="black" />
+        <transform name="to_world">
+            <translate x="0" y="0" z="1.0" />
+        </transform>
+    </shape>
+
+    <shape type="obj" id="redwall">
+        <string name="filename" value="/home/ctaglione/mitsuba3/mitsuba3/tutorials/scenes/meshes/cbox_redwall.obj" />
+        <ref id="black" />
+        <transform name="to_world">
+            <translate x="0" y="0" z="1.0" />
+        </transform>
+    </shape> 
+</scene>
+

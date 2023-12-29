@@ -29,7 +29,10 @@
 
     <!-- BSDFs -->
 
-    <bsdf type="dielectric" id="glass"/>
+    <bsdf type="dielectric" id="glass">
+        <float name="int_ior" value="1.504"/>
+        <float name="ext_ior" value="1.0"/>
+    </bsdf>
 
     <bsdf type="conductor" id="metal">
         <spectrum name="eta" value="0.24873"/>
@@ -43,6 +46,7 @@
     <bsdf type="diffuse" id="white">
         <rgb name="reflectance" value="0.8"/>
     </bsdf>
+
 
     <!-- Light -->
 

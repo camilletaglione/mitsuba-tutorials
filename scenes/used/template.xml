@@ -1,0 +1,130 @@
+<scene version="3.0.0">
+    <default name="spp" value="512"/>
+    <default name="res" value="256"/>
+
+    <integrator type="stokes">
+        <integrator type='path'/>
+    </integrator>
+
+    <sensor type="perspective" id="sensor">
+        <string name="fov_axis" value="smaller"/>
+        <float name="near_clip" value="0.01"/>
+        <float name="far_clip" value="1000"/>
+        <float name="focus_distance" value="1000"/>
+        <float name="fov" value="39.3077"/>
+        <transform name="to_world">
+            <lookat origin="0, 0, 4"
+                    target="0, 0, 0"
+                    up    ="0, 1  0"/>
+        </transform>
+        <sampler type="independent">
+            <integer name="sample_count" value="$spp"/>
+        </sampler>
+        <film type="hdrfilm">
+            <integer name="width"  value="$res"/>
+            <integer name="height" value="$res"/>
+            <rfilter type="gaussian"/>
+        </film>
+    </sensor>
+
+    <!-- BSDFs -->
+
+    <bsdf type="dielectric" id="glass"/>
+
+    <!-- Light -->
+
+    <shape type="obj" id="light">
+        <string name="filename" value="meshes/cbox_luminaire.obj"/>
+        <transform name="to_world">
+            <translate x="0" y="-0.01" z="0"/>
+        </transform>
+        <ref id="white"/>
+        <emitter type="area">
+            <rgb name="radiance" value="25.0"/>
+        </emitter>
+    </shape>
+
+    <!-- Shapes  -->
+
+    <shape type="obj" id="nbr"> 
+        <string name="filename" value="path.obj"/>
+            <transform name="to_world">
+                <translate x="0" y="-0.01" z="0"/>
+                <rotate x="0" y="0" z="0" w="0"/>
+            </transform>
+        <bsdf type="dieletric"/>
+    </shape> 
+   
+</scene>
+
+modifications = [
+    {'xpath': './shape[@type="obj" and @id="i"]/string[@name="filename"]/@value', 'new_value': 'mesh'},
+    {'xpath': './shape[@type="obj" and @id="i"]/transform[@name="to_world"]/translate/@x', 'new_value': 'trans[0]'},
+    {'xpath': './shape[@type="obj" and @id="i"]/transform[@name="to_world"]/translate/@y', 'new_value': 'trans[1]'},
+    {'xpath': './shape[@type="obj" and @id="i"]/transform[@name="to_world"]/translate/@z', 'new_value': 'trans[2]'},
+    {'xpath': './shape[@type="obj" and @id="i"]/transform[@name="to_world"]/rotate[@axis="1 0 0"]/@angle', 'new_value': 'rot[0]'},
+    {'xpath': './shape[@type="obj" and @id="i"]/transform[@name="to_world"]/rotate[@axis="0 1 0"]/@angle', 'new_value': 'rot[1]'},
+    {'xpath': './shape[@type="obj" and @id="i"]/transform[@name="to_world"]/rotate[@axis="0 0 1"]/@angle', 'new_value': 'rot[2]'}
+]
+
+
+
+    <shape type="obj" id="nbr"> 
+        <string name="filename" value="path.obj" />
+            <transform name="to_world">
+                <translate x="0" y="0" z="0" />
+                <rotate axis="1 0 0" angle="0" />
+                <rotate axis="0 1 0" angle="0" /> 
+                <rotate axis="0 0 1" angle="0" />  
+            </transform>
+        <bsdf type="dieletric" />
+    </shape> 
+
+<transform name="to_world"><translate x="0.05531520275397664" y="0.15173039436228541" z="0.06357046537558105" /><rotate axis="1 0 0" angle="81.60708353701017" /><rotate axis="0 1 0" angle="80.75934444172708" /><rotate axis="0 0 1" angle="-8.51860266984927" /></transform></scene>
+
+
+
+
+
+def create_xml(template_path, output_path, new_values):
+    tree = ET.parse(template_path)
+    root = tree.getroot()
+    shape_elements = root.findall('.//shape')
+    if len(shape_elements) >= 2:
+        second_shape = shape_elements[1]
+        mesh_element = second_shape.find('./string[@name="filename"]')
+        if mesh_element is not None:
+            mesh_element.set('value', mesh_path)
+        translation_element = second_shape.find('./transform[@name="to_world"]/translate')
+        if translation_element is not None:
+            translation_element.set('x', str(translation_values[0]))
+            translation_element.set('y', str(translation_values[1]))
+            translation_element.set('z', str(translation_values[2]))
+        rotate_elements = second_shape.findall('./transform[@name="to_world"]/rotate')
+        for i, rotate_element in enumerate(rotate_elements):
+            rotate_element.set('angle', rotation_values[i])
+        tree.write(output_path)
+
+                <rotate axis="1 0 0" angle="81.60708353701017" />
+                <rotate axis="0 1 0" angle="80.75934444172708" /> 
+                <rotate axis="0 0 1" angle="351.48139733015074" />  
+
+
+
+
+
+
+def pass_mono(Image): 
+    luminance = 0.299 * Image[:, :, 0] + 0.587 * Image[:, :, 1] + 0.114 * Image[:, :, 2]
+    monochrome_image = luminance.astype(np.uint8)
+    return monochrome_image
+
+
+def show_hsv(I, DoP, AoP):
+    AoP_m = pass_mono(AoP)
+    DoP_m = pass_mono(DoP)
+    I_m = pass_mono(I)
+    hsv = np.zeros_like(I)
+    hsv[:,:0]=2*AoP_m
+    hsv[:,:1]=DoP_m
+    hsv[:,:2]=I_m/255
